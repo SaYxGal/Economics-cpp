@@ -26,23 +26,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QFrame" name="horizontalFrame">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>10</y>
-      <width>661</width>
-      <height>511</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::Panel</enum>
-    </property>
-    <property name="lineWidth">
-     <number>1</number>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout"/>
-   </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
@@ -120,12 +103,18 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="Qd_1">
+        <widget class="QSpinBox" name="Qd_1">
          <property name="maximumSize">
           <size>
-           <width>30</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="minimum">
+          <number>-1000</number>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
          </property>
         </widget>
        </item>
@@ -151,12 +140,18 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="Qd_2">
+        <widget class="QSpinBox" name="Qd_2">
          <property name="maximumSize">
           <size>
-           <width>30</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="minimum">
+          <number>-1000</number>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
          </property>
         </widget>
        </item>
@@ -291,6 +286,36 @@
     </property>
     <property name="text">
      <string>Составить график</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_4">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>10</y>
+      <width>651</width>
+      <height>531</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="mainLayout"/>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>9</y>
+      <width>651</width>
+      <height>531</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Panel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="lineWidth">
+     <number>2</number>
     </property>
    </widget>
   </widget>
