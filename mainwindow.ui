@@ -122,7 +122,7 @@
         <widget class="QLabel" name="label_4">
          <property name="maximumSize">
           <size>
-           <width>10</width>
+           <width>15</width>
            <height>16777215</height>
           </size>
          </property>
@@ -132,7 +132,7 @@
           </font>
          </property>
          <property name="text">
-          <string>   -</string>
+          <string>   +</string>
          </property>
          <property name="textFormat">
           <enum>Qt::RichText</enum>
@@ -212,12 +212,18 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="Qs_1">
+        <widget class="QSpinBox" name="Qs_1">
          <property name="maximumSize">
           <size>
-           <width>30</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="minimum">
+          <number>-1000</number>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
          </property>
         </widget>
        </item>
@@ -243,12 +249,18 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="Qs_2">
+        <widget class="QSpinBox" name="Qs_2">
          <property name="maximumSize">
           <size>
-           <width>30</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="minimum">
+          <number>-1000</number>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
          </property>
         </widget>
        </item>

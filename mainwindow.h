@@ -18,6 +18,7 @@ public:
     ~MainWindow();
 private:
     bool isValid();
+    void generateLine(QChart* chart, int first, int second, QValueAxis *xAxis,  QValueAxis *yAxis);
 private slots:
     void on_pushButton_clicked();
 
