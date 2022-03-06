@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->mainLayout->addWidget(chartView);
+    chartView->setRenderHint(QPainter::Antialiasing);
 }
 
 MainWindow::~MainWindow()
