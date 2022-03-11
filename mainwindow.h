@@ -5,6 +5,7 @@
 #include <QtCharts>
 #include <QChartView>
 #include <QLineSeries>
+#include <QMouseEvent>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -19,6 +20,7 @@ public:
 private:
     bool isValid();
     void generateLine(QChart* chart, int first, int second, QValueAxis *xAxis,  QValueAxis *yAxis);
+    void addMarkerOfEqual(QChart*chart, QValueAxis* xAxis, QValueAxis* yAxis);
 private slots:
     void on_pushButton_clicked();
 
