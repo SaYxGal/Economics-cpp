@@ -6,9 +6,18 @@
 #include <QChartView>
 #include <QLineSeries>
 #include <QMouseEvent>
+#include <QGraphicsSimpleTextItem>
+#include "xlsxdocument.h"
+#include "xlsxchartsheet.h"
+#include "xlsxcellrange.h"
+#include "xlsxchart.h"
+#include "xlsxrichstring.h"
+#include "xlsxworkbook.h"
+using namespace QXlsx;
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+
 
 class MainWindow : public QMainWindow
 {
@@ -20,12 +29,16 @@ public:
 private:
     bool isValid();
     void generateLine(QChart* chart, int first, int second, QValueAxis *xAxis,  QValueAxis *yAxis);
-    void addMarkerOfEqual(QChart*chart, QValueAxis* xAxis, QValueAxis* yAxis);
+    bool addMarkerOfEqual(QChart*chart, QValueAxis* xAxis, QValueAxis* yAxis);
 private slots:
     void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
 
 private:
     Ui::MainWindow *ui;
     QChartView *chartView;
 };
+
+
 #endif // MAINWINDOW_H
