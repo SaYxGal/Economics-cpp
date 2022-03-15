@@ -69,12 +69,12 @@ void MainWindow::on_pushButton_clicked()
         int qs_1 = ui->Qs_1->value();
         int qs_2 = ui->Qs_2->value();
         QValueAxis* xAxis = new QValueAxis;
-        xAxis->setTitleText("Объём товара");
+        xAxis->setTitleText("Объём товара (Q)");
         xAxis->setTickCount(10);
         xAxis->setRange(0, (qd_1 + qd_2 * ui->horizontalSlider->value())+ 50);
         xAxis->setLabelFormat("% d");
         QValueAxis* yAxis = new QValueAxis;
-        yAxis->setTitleText("Цена");
+        yAxis->setTitleText("Цена (P)");
         yAxis->setTickCount(10);
         yAxis->setRange(0, ui->horizontalSlider->value() + 50);
         yAxis->setLabelFormat("% d");
@@ -106,21 +106,32 @@ bool MainWindow::isValid()
 void MainWindow::on_pushButton_2_clicked()
 {
     Document xlsx;
+    Format format;
+    format.setBorderStyle(Format::BorderMediumDashDot);
+    format.setFontColor(Qt::red);
+    format.setFontBold(true);
     xlsx.write(1, 2, 0);
     xlsx.write(2, 2, ui->Qd_1->value()); //начальная точка графика спроса
-
     xlsx.write(1, 3, ui->horizontalSlider->value());
     xlsx.write(2, 3, ui->Qd_1->value() + ui->Qd_2->value() * ui->horizontalSlider->value()); //конеч. точка графика спроса
 
     xlsx.write(3, 2, 0);
     xlsx.write(4, 2, ui->Qs_1->value());
-
     xlsx.write(3, 3, ui->horizontalSlider->value());
     xlsx.write(4, 3, ui->Qs_1->value() + ui->Qs_2->value() * ui->horizontalSlider->value());
 
-    Chart *lineChart = xlsx.insertChart(4, 3, QSize(600, 600));
+    double temp = (double)(ui->Qs_1->value() - ui->Qd_1->value()) / (double)(ui->Qd_2->value() - ui->Qs_2->value());
+    xlsx.write("D21", "Равновесный объём");
+    xlsx.write("D22", ui->Qd_1->value() + ui->Qd_2->value() * temp, format);
+    xlsx.write("G21", "Равновесная цена");
+    xlsx.write("G22", temp, format);
+
+
+    Chart *lineChart = xlsx.insertChart(0, 3, QSize(400, 400));
     lineChart->setChartType(Chart::CT_LineChart);
-    lineChart->setChartTitle("Test1");
+    lineChart->setChartTitle("Результат");
+    lineChart->setAxisTitle(Chart::ChartAxisPos::Bottom, "Цена");
+    lineChart->setAxisTitle(Chart::ChartAxisPos::Left, "Объём товара");
     lineChart->addSeries(CellRange(1,1,2,3), NULL, true, true, false);
     lineChart->addSeries(CellRange(3, 1, 4, 3), NULL, true, true, false);
     xlsx.saveAs("chart1.xlsx");
