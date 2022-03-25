@@ -39,7 +39,7 @@ bool MainWindow::addMarkerOfEqual(QChart*chart, QValueAxis* xAxis, QValueAxis* y
         QScatterSeries *marker = new QScatterSeries();
         marker->setMarkerSize(10);
         answer = QPointF(temp2, temp);
-        if(temp2 > 0 && temp > 0){
+        if(temp2 > 0 && temp > 0 && ((ui->Qs_1->value() + ui->Qs_2->value() * ui->horizontalSlider->value()) > temp2)){
             marker->setBrush(Qt::green);
             ui->status->setText("<html>Равновесная цена = " + QString::number(temp) + "<br>Равновесный объём = " + QString::number(temp2) + "</html>");
         }
@@ -71,7 +71,7 @@ void MainWindow::on_pushButton_clicked()
         QValueAxis* xAxis = new QValueAxis;
         xAxis->setTitleText("Объём товара (Q)");
         xAxis->setTickCount(10);
-        xAxis->setRange(0, (qd_1 + qd_2 * ui->horizontalSlider->value())+ 50);
+        xAxis->setRange(0, (qs_1 + qs_2 * ui->horizontalSlider->value())+ 50);
         xAxis->setLabelFormat("% d");
         QValueAxis* yAxis = new QValueAxis;
         yAxis->setTitleText("Цена (P)");
@@ -126,7 +126,6 @@ void MainWindow::on_pushButton_2_clicked()
     xlsx.write("G21", "Равновесная цена");
     xlsx.write("G22", temp, format);
 
-
     Chart *lineChart = xlsx.insertChart(0, 3, QSize(400, 400));
     lineChart->setChartType(Chart::CT_LineChart);
     lineChart->setChartTitle("Результат");
@@ -135,5 +134,10 @@ void MainWindow::on_pushButton_2_clicked()
     lineChart->addSeries(CellRange(1,1,2,3), NULL, true, true, false);
     lineChart->addSeries(CellRange(3, 1, 4, 3), NULL, true, true, false);
     xlsx.saveAs("chart1.xlsx");
+}
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+    ui->horizontalSlider->setToolTip(QString::fromStdString(std::to_string(value)));
 }
 
