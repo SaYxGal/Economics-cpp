@@ -41,7 +41,7 @@ bool MainWindow::addMarkerOfEqual(QChart*chart, QValueAxis* xAxis, QValueAxis* y
         answer = QPointF(temp2, temp);
         if(temp2 > 0 && temp > 0 && ((ui->Qs_1->value() + ui->Qs_2->value() * ui->horizontalSlider->value()) > temp2)){
             marker->setBrush(Qt::green);
-            ui->status->setText("<html>Равновесная цена = " + QString::number(temp) + "<br>Равновесный объём = " + QString::number(temp2) + "</html>");
+            ui->status->setText("<html>Равновесная цена = " + QString::number(temp) + "<br>Равновесный объём = " + QString::number(temp2) + "<br>Эластичность спроса по цене = " + QString::number(elasticity(temp, temp2)) + "</html>");
         }
         else{
             marker->setBrush(Qt::red);
@@ -57,6 +57,10 @@ bool MainWindow::addMarkerOfEqual(QChart*chart, QValueAxis* xAxis, QValueAxis* y
          ui->status->setText("Равновесной цены не обнаружено");
          return false;
     }
+}
+
+double MainWindow::elasticity(double mid_price, double mid_volume){
+    return (ui->Qd_2->value() * mid_price) / mid_volume;
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -125,8 +129,10 @@ void MainWindow::on_pushButton_2_clicked()
     xlsx.write("D22", ui->Qd_1->value() + ui->Qd_2->value() * temp, format);
     xlsx.write("G21", "Равновесная цена");
     xlsx.write("G22", temp, format);
+    xlsx.write("J21", "Эластичность спроса по цене");
+    xlsx.write("J22", elasticity(temp, ui->Qd_1->value() + ui->Qd_2->value()* temp), format);
 
-    Chart *lineChart = xlsx.insertChart(0, 3, QSize(400, 400));
+    Chart *lineChart = xlsx.insertChart(0, 3, QSize(600, 400));
     lineChart->setChartType(Chart::CT_LineChart);
     lineChart->setChartTitle("Результат");
     lineChart->setAxisTitle(Chart::ChartAxisPos::Bottom, "Цена");

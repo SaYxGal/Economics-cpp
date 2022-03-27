@@ -30,6 +30,7 @@ public:
 private:
     bool isValid();
     void generateLine(QChart* chart, int first, int second, QValueAxis *xAxis,  QValueAxis *yAxis);
+    double elasticity(double mid_price, double mid_volume);
     bool addMarkerOfEqual(QChart*chart, QValueAxis* xAxis, QValueAxis* yAxis);
 private slots:
     void on_pushButton_clicked();
