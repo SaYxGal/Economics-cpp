@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>helpWindow</class>
+ <widget class="QWidget" name="helpWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>700</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>700</width>
+    <height>500</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Справка</string>
+  </property>
+  <widget class="QTextBrowser" name="textBrowser">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>661</width>
+     <height>441</height>
+    </rect>
+   </property>
+   <property name="html">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; font-weight:696; font-style:italic; color:#333333; background-color:#ffffff;&quot;&gt;Объем спроса&lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333; background-color:#ffffff;&quot;&gt; (Qd) - это то количество товара, на который предъявляется спрос за определенный период времени.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333; background-color:#ffffff;&quot;&gt;Зависимость объема спроса от определяющих его факторов называют &lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; font-weight:696; font-style:italic; color:#333333; background-color:#ffffff;&quot;&gt;функцией спроса&lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333; background-color:#ffffff;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; font-weight:696; font-style:italic; color:#333333; background-color:#ffffff;&quot;&gt;Объем предложения&lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333; background-color:#ffffff;&quot;&gt; (Qs) - это то количество товара, которое желают и могут произвести и продать продавцы в единицу времени при определенных условиях. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333; background-color:#ffffff;&quot;&gt;Зависимость объема предложения от определяющих его факторов называется &lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; font-weight:696; font-style:italic; color:#333333; background-color:#ffffff;&quot;&gt;функцией&lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333; background-color:#ffffff;&quot;&gt; предложения.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333; background-color:#ffffff;&quot;&gt;В точке пересечения функций&lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; font-style:italic; color:#333333; background-color:#ffffff;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333; background-color:#ffffff;&quot;&gt;объем предложения будет равен объему спроса (Qd = Qs), и сложится цена, одинаково удовлетворяющая как покупателей, так и продавцов, называемая&lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; font-style:italic; color:#333333; background-color:#ffffff;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; font-weight:600; font-style:italic; color:#333333; background-color:#ffffff;&quot;&gt;равновесной ценой&lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333; background-color:#ffffff;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; font-weight:696; font-style:italic; color:#333333; background-color:#ffffff;&quot;&gt;Эластичность спроса по цене&lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333; background-color:#ffffff;&quot;&gt; (Ed) измеряется как отношение изменения объема спроса в процентах к изменению цены в процентах. Эластичность принято считать по модулю.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333; background-color:#ffffff;&quot;&gt;Различают следующие типы эластичности:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:10px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333; background-color:#ffffff;&quot;&gt;- единичную эластичность (Ed = 1), когда на каждый процент изменения цены объем спроса изменяется соответственно на 1%;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:10px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333; background-color:#ffffff;&quot;&gt;- эластичный спрос (Ed &amp;gt; 1), когда объем спроса в процентах изменяется быстрее, чем изменяется цена в процентах;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:10px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333; background-color:#ffffff;&quot;&gt;- неэластичный спрос (Ed &amp;lt; 1), когда объем спроса изменяется медленнее, чем изменяется цена.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:10px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:10pt; color:#333333; background-color:#ffffff;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:8pt; color:#333333;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif','Georgia','Times New Roman','Verdana','Arial'; font-size:7pt; color:#333333;&quot;&gt;Источник информации : https://axd.semestr.ru/econ/eq_price.php&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

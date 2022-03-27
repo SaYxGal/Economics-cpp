@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "helpwindow.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -60,7 +61,7 @@ bool MainWindow::addMarkerOfEqual(QChart*chart, QValueAxis* xAxis, QValueAxis* y
 }
 
 double MainWindow::elasticity(double mid_price, double mid_volume){
-    return (ui->Qd_2->value() * mid_price) / mid_volume;
+    return abs((ui->Qd_2->value() * mid_price) / mid_volume);
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -145,5 +146,13 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_horizontalSlider_valueChanged(int value)
 {
     ui->horizontalSlider->setToolTip(QString::fromStdString(std::to_string(value)));
+}
+
+
+void MainWindow::on_helpButton_clicked()
+{
+    helpWindow *help = new helpWindow();
+    help->setModal(true);
+    help->show();
 }
 

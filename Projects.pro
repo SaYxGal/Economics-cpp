@@ -13,13 +13,16 @@ QXLSX_HEADERPATH=./header/  # current QXlsx header path is ./header/
 QXLSX_SOURCEPATH=./source/  # current QXlsx source path is ./source/
 include(./QXlsx.pri)
 SOURCES += \
+    helpwindow.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    helpwindow.h \
     mainwindow.h
 
 FORMS += \
+    helpwindow.ui \
     mainwindow.ui
 
 # Default rules for deployment.
