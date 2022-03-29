@@ -7,6 +7,7 @@
 #include <QChartView>
 #include <QLineSeries>
 #include <QMouseEvent>
+#include <utility>
 #include <QGraphicsSimpleTextItem>
 #include "xlsxdocument.h"
 #include "xlsxchartsheet.h"
@@ -30,7 +31,8 @@ public:
 private:
     bool isValid();
     void generateLine(QChart* chart, int first, int second, QValueAxis *xAxis,  QValueAxis *yAxis);
-    double elasticity(double mid_price, double mid_volume);
+    void createAreasOfSurplus(QChart* chart, double mid_price, double mid_volume, QValueAxis* xAxis, QValueAxis* yAxis);
+    std::pair<double, double> elasticity(double mid_price, double mid_volume);
     bool addMarkerOfEqual(QChart*chart, QValueAxis* xAxis, QValueAxis* yAxis);
 private slots:
     void on_pushButton_clicked();
@@ -44,6 +46,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QChartView *chartView;
+    bool isDefined = false;
 };
 
 

@@ -32,6 +32,19 @@ void MainWindow::generateLine(QChart *chart, int first, int second, QValueAxis* 
 //    QString coordStr = QString("X = %1, Y = %2").arg(curVal.x()).arg(curVal.y());
 //    ui->coords->setText(coordStr);
 //}
+void MainWindow::createAreasOfSurplus(QChart* chart, double mid_price, double mid_volume, QValueAxis* xAxis, QValueAxis* yAxis){
+    QLineSeries *series_of_mid_price = new QLineSeries();
+    series_of_mid_price->append(ui->Qd_1->value() + ui->Qd_2->value() * ui->horizontalSlider->value(), mid_price);
+    series_of_mid_price->append(mid_volume, mid_price);
+    QLineSeries *series_for_spros = new QLineSeries();
+    series_for_spros->append(ui->Qd_1->value() + ui->Qd_2->value() * ui->horizontalSlider->value(), ui->horizontalSlider->value());
+    series_for_spros->append(mid_volume, mid_price);
+    QAreaSeries *area1 = new QAreaSeries(series_for_spros, series_of_mid_price);
+    area1->setBrush(Qt::cyan);
+    chart->addSeries(area1);
+    area1->attachAxis(xAxis);
+    area1->attachAxis(yAxis);
+}
 bool MainWindow::addMarkerOfEqual(QChart*chart, QValueAxis* xAxis, QValueAxis* yAxis){
     QPointF answer;
     if(ui->Qd_2->value() - ui->Qs_2->value() != 0){
@@ -41,8 +54,10 @@ bool MainWindow::addMarkerOfEqual(QChart*chart, QValueAxis* xAxis, QValueAxis* y
         marker->setMarkerSize(10);
         answer = QPointF(temp2, temp);
         if(temp2 > 0 && temp > 0 && ((ui->Qs_1->value() + ui->Qs_2->value() * ui->horizontalSlider->value()) > temp2)){
+            isDefined = true;
             marker->setBrush(Qt::green);
-            ui->status->setText("<html>Равновесная цена = " + QString::number(temp) + "<br>Равновесный объём = " + QString::number(temp2) + "<br>Эластичность спроса по цене = " + QString::number(elasticity(temp, temp2)) + "</html>");
+            std::pair<double, double> elastic = elasticity(temp, temp2);
+            ui->status->setText("<html>Равновесная цена = " + QString::number(temp) + "<br>Равновесный объём = " + QString::number(temp2) + "<br>Эластичность спроса по цене = " + QString::number(elastic.first) + "<br>Эластичность предложения по цене = " + QString::number(elastic.second) + "</html>");
         }
         else{
             marker->setBrush(Qt::red);
@@ -60,8 +75,8 @@ bool MainWindow::addMarkerOfEqual(QChart*chart, QValueAxis* xAxis, QValueAxis* y
     }
 }
 
-double MainWindow::elasticity(double mid_price, double mid_volume){
-    return abs((ui->Qd_2->value() * mid_price) / mid_volume);
+std::pair<double, double> MainWindow::elasticity(double mid_price, double mid_volume){
+    return std::make_pair(abs((ui->Qd_2->value() * mid_price) / mid_volume), abs((ui->Qs_2->value() * mid_price) / mid_volume));
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -74,18 +89,25 @@ void MainWindow::on_pushButton_clicked()
         int qs_1 = ui->Qs_1->value();
         int qs_2 = ui->Qs_2->value();
         QValueAxis* xAxis = new QValueAxis;
-        xAxis->setTitleText("Объём товара (Q)");
+        xAxis->setTitleText("Объём товара (Q, ед)");
         xAxis->setTickCount(10);
-        xAxis->setRange(0, (qs_1 + qs_2 * ui->horizontalSlider->value())+ 50);
+        xAxis->setRange(0, (qs_1 + qs_2 * ui->horizontalSlider->value())+ 10);
         xAxis->setLabelFormat("% d");
         QValueAxis* yAxis = new QValueAxis;
-        yAxis->setTitleText("Цена (P)");
+        yAxis->setTitleText("Цена (P, руб)");
         yAxis->setTickCount(10);
-        yAxis->setRange(0, ui->horizontalSlider->value() + 50);
+        yAxis->setRange(0, ui->horizontalSlider->value() + 10);
         yAxis->setLabelFormat("% d");
         QChart *chart = new QChart();
         chart->addAxis(xAxis, Qt::AlignBottom);
         chart->addAxis(yAxis, Qt::AlignLeft);
+        if(ui->Qd_2->value() - ui->Qs_2->value() != 0){
+            double temp = (double)(ui->Qs_1->value() - ui->Qd_1->value()) / (double)(ui->Qd_2->value() - ui->Qs_2->value());
+            double temp2 = ui->Qd_1->value() + ui->Qd_2->value() * temp;
+             if(temp2 > 0 && temp > 0 && ((ui->Qs_1->value() + ui->Qs_2->value() * ui->horizontalSlider->value()) > temp2) && ui->Qd_2->value() < 0){
+                createAreasOfSurplus(chart,temp, temp2, xAxis, yAxis);
+             }
+        }
         generateLine(chart, qd_1, qd_2, xAxis, yAxis);
         generateLine(chart, qs_1, qs_2, xAxis, yAxis);
         addMarkerOfEqual(chart, xAxis, yAxis);
@@ -125,13 +147,18 @@ void MainWindow::on_pushButton_2_clicked()
     xlsx.write(3, 3, ui->horizontalSlider->value());
     xlsx.write(4, 3, ui->Qs_1->value() + ui->Qs_2->value() * ui->horizontalSlider->value());
 
-    double temp = (double)(ui->Qs_1->value() - ui->Qd_1->value()) / (double)(ui->Qd_2->value() - ui->Qs_2->value());
-    xlsx.write("D21", "Равновесный объём");
-    xlsx.write("D22", ui->Qd_1->value() + ui->Qd_2->value() * temp, format);
-    xlsx.write("G21", "Равновесная цена");
-    xlsx.write("G22", temp, format);
-    xlsx.write("J21", "Эластичность спроса по цене");
-    xlsx.write("J22", elasticity(temp, ui->Qd_1->value() + ui->Qd_2->value()* temp), format);
+    if(isDefined == true){
+        double temp = (double)(ui->Qs_1->value() - ui->Qd_1->value()) / (double)(ui->Qd_2->value() - ui->Qs_2->value());
+        xlsx.write("D21", "Равновесный объём");
+        xlsx.write("D22", ui->Qd_1->value() + ui->Qd_2->value() * temp, format);
+        xlsx.write("G21", "Равновесная цена");
+        xlsx.write("G22", temp, format);
+        std::pair<double, double> numbers = elasticity(temp, ui->Qd_1->value() + ui->Qd_2->value() * temp);
+        xlsx.write("J21", "Эластичность спроса по цене");
+        xlsx.write("J22", numbers.first, format);
+        xlsx.write("J23", "Эластичность предложения по цене");
+        xlsx.write("J24", numbers.second, format);
+    }
 
     Chart *lineChart = xlsx.insertChart(0, 3, QSize(600, 400));
     lineChart->setChartType(Chart::CT_LineChart);
