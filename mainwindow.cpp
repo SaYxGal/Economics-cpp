@@ -22,6 +22,14 @@ void MainWindow::generateLine(QChart *chart, int first, int second, QValueAxis* 
     QLineSeries *series = new QLineSeries();
     series->append(first,0);
     series->append(first + second * ui->horizontalSlider->value(), ui->horizontalSlider->value());
+    if(needForGenerate == false) {
+        series->setName("Функция спроса");
+        needForGenerate = true;
+    }
+    else{
+        series->setName("Функция предложения");
+        needForGenerate = false;
+    }
     chart->addSeries(series);
     series->attachAxis(xAxis);
     series->attachAxis(yAxis);
@@ -36,14 +44,32 @@ void MainWindow::createAreasOfSurplus(QChart* chart, double mid_price, double mi
     QLineSeries *series_of_mid_price = new QLineSeries();
     series_of_mid_price->append(ui->Qd_1->value() + ui->Qd_2->value() * ui->horizontalSlider->value(), mid_price);
     series_of_mid_price->append(mid_volume, mid_price);
+
     QLineSeries *series_for_spros = new QLineSeries();
     series_for_spros->append(ui->Qd_1->value() + ui->Qd_2->value() * ui->horizontalSlider->value(), ui->horizontalSlider->value());
     series_for_spros->append(mid_volume, mid_price);
+
+    QLineSeries *series_for_predlog = new QLineSeries();
+    series_for_predlog->append(ui->Qs_1->value(), 0);
+    series_for_predlog->append(mid_volume, mid_price);
+
+    QLineSeries *series_of_mid_price_2 = new QLineSeries();
+    series_of_mid_price_2->append(ui->Qs_1->value(), mid_price);
+    series_of_mid_price_2->append(mid_volume, mid_price);
+
     QAreaSeries *area1 = new QAreaSeries(series_for_spros, series_of_mid_price);
+    QAreaSeries *area2 = new QAreaSeries(series_of_mid_price_2, series_for_predlog);
+
     area1->setBrush(Qt::cyan);
+    area2->setBrush(Qt::magenta);
+    area1->setName("Зона излишков потребителя");
+    area2->setName("Зона излишков продавца");
     chart->addSeries(area1);
+    chart->addSeries(area2);
     area1->attachAxis(xAxis);
+    area2->attachAxis(xAxis);
     area1->attachAxis(yAxis);
+    area2->attachAxis(yAxis);
 }
 bool MainWindow::addMarkerOfEqual(QChart*chart, QValueAxis* xAxis, QValueAxis* yAxis){
     QPointF answer;
@@ -104,14 +130,14 @@ void MainWindow::on_pushButton_clicked()
         if(ui->Qd_2->value() - ui->Qs_2->value() != 0){
             double temp = (double)(ui->Qs_1->value() - ui->Qd_1->value()) / (double)(ui->Qd_2->value() - ui->Qs_2->value());
             double temp2 = ui->Qd_1->value() + ui->Qd_2->value() * temp;
-             if(temp2 > 0 && temp > 0 && ((ui->Qs_1->value() + ui->Qs_2->value() * ui->horizontalSlider->value()) > temp2) && ui->Qd_2->value() < 0){
+             if(temp2 > 0 && temp > 0 && ((ui->Qs_1->value() + ui->Qs_2->value() * ui->horizontalSlider->value()) > temp2) && ui->Qd_2->value() < 0 && ui->Qs_2->value() > 0){
                 createAreasOfSurplus(chart,temp, temp2, xAxis, yAxis);
              }
         }
         generateLine(chart, qd_1, qd_2, xAxis, yAxis);
         generateLine(chart, qs_1, qs_2, xAxis, yAxis);
         addMarkerOfEqual(chart, xAxis, yAxis);
-        chart->legend()->hide();
+        //chart->legend()->hide();
         chart->setTitle("График");
         chartView->setChart(chart);
     }

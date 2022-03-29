@@ -47,6 +47,7 @@ private:
     Ui::MainWindow *ui;
     QChartView *chartView;
     bool isDefined = false;
+    bool needForGenerate = false;
 };
 
 
