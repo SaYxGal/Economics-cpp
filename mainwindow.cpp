@@ -23,10 +23,12 @@ void MainWindow::generateLine(QChart *chart, int first, int second, QValueAxis* 
     series->append(first,0);
     series->append(first + second * ui->horizontalSlider->value(), ui->horizontalSlider->value());
     if(needForGenerate == false) {
+        series->setColor(Qt::blue);
         series->setName("Функция спроса");
         needForGenerate = true;
     }
     else{
+        series->setColor(Qt::red);
         series->setName("Функция предложения");
         needForGenerate = false;
     }
@@ -60,8 +62,8 @@ void MainWindow::createAreasOfSurplus(QChart* chart, double mid_price, double mi
     QAreaSeries *area1 = new QAreaSeries(series_for_spros, series_of_mid_price);
     QAreaSeries *area2 = new QAreaSeries(series_of_mid_price_2, series_for_predlog);
 
-    area1->setBrush(Qt::cyan);
-    area2->setBrush(Qt::magenta);
+    area1->setBrush(QColor(127, 255, 212, 100));
+    area2->setBrush(QColor(255, 160 ,122, 100));
     area1->setName("Зона излишков потребителя");
     area2->setName("Зона излишков продавца");
     chart->addSeries(area1);
@@ -79,7 +81,7 @@ bool MainWindow::addMarkerOfEqual(QChart*chart, QValueAxis* xAxis, QValueAxis* y
         QScatterSeries *marker = new QScatterSeries();
         marker->setMarkerSize(10);
         answer = QPointF(temp2, temp);
-        if(temp2 > 0 && temp > 0 && ((ui->Qs_1->value() + ui->Qs_2->value() * ui->horizontalSlider->value()) > temp2)){
+        if(temp2 > 0 && temp > 0 && ((ui->Qs_1->value() + ui->Qs_2->value() * ui->horizontalSlider->value()) >= temp2) && ui->horizontalSlider->value() >= temp){
             isDefined = true;
             marker->setBrush(Qt::green);
             std::pair<double, double> elastic = elasticity(temp, temp2);
@@ -117,13 +119,13 @@ void MainWindow::on_pushButton_clicked()
         QValueAxis* xAxis = new QValueAxis;
         xAxis->setTitleText("Объём товара (Q, ед)");
         xAxis->setTickCount(10);
-        xAxis->setRange(0, (qs_1 + qs_2 * ui->horizontalSlider->value())+ 10);
-        xAxis->setLabelFormat("% d");
+        xAxis->setRange(0, int(qs_1 + qs_2 * ui->horizontalSlider->value())+ 10);
+        xAxis->setLabelFormat("% .1f");
         QValueAxis* yAxis = new QValueAxis;
         yAxis->setTitleText("Цена (P, руб)");
         yAxis->setTickCount(10);
         yAxis->setRange(0, ui->horizontalSlider->value() + 10);
-        yAxis->setLabelFormat("% d");
+        yAxis->setLabelFormat("% .1f");
         QChart *chart = new QChart();
         chart->addAxis(xAxis, Qt::AlignBottom);
         chart->addAxis(yAxis, Qt::AlignLeft);
