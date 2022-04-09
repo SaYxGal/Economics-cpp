@@ -231,18 +231,25 @@ void MainWindow::on_pushButton_3_clicked()
             Cell* Qs1 = xlsxRead.cellAt(row+1, 1);
             Cell* Qs2 = xlsxRead.cellAt(row+1, 2);
             if(Qd1 != NULL && Qd2 != NULL && Qs1 != NULL && Qs2 != NULL){
+                answer.write(1 + count*otstup, 2, 0);
+                answer.write(1 + 1 + count*otstup, 2, Qd1->readValue().toInt()); //начальная точка графика спроса
+                answer.write(1 + count*otstup, 3, 100);
+                answer.write(1 + 1 + count*otstup, 3, Qd1->readValue().toInt() + Qd2->readValue().toInt() * 100); //конеч. точка графика спроса
+
+                answer.write(1 + 2 + count*otstup, 2, 0);
+                answer.write(1 + 3 + count*otstup, 2, Qs1->readValue().toInt());
+                answer.write(1 + 2 + count*otstup, 3, 100);
+                answer.write(1 + 3 + count*otstup, 3, Qs1->readValue().toInt() + Qs2->readValue().toInt() * 100);
+                Chart *lineChart = answer.insertChart(1 - 1 + count*otstup, 3, QSize(600, 400));
+                lineChart->setChartType(Chart::CT_LineChart);
+                lineChart->setChartTitle("Результат");
+                lineChart->setAxisTitle(Chart::ChartAxisPos::Bottom, "Цена");
+                lineChart->setAxisTitle(Chart::ChartAxisPos::Left, "Объём товара");
+                lineChart->addSeries(CellRange(1 + count * otstup,1,1 + 1 + count*otstup,3), NULL, true, true, false);
+                lineChart->addSeries(CellRange(1 + 2 + count * otstup, 1, 1 + 3 + count * otstup, 3), NULL, true, true, false);
                 if(Qd2->readValue().toInt() - Qs2->readValue().toInt() != 0){
                     double temp = (double)(Qs1->readValue().toInt() - Qd1->readValue().toInt()) / (double)(Qd2->readValue().toInt() - Qs2->readValue().toInt());
                     double temp2 = Qd1->readValue().toInt() + Qd2->readValue().toInt() * temp;
-                    answer.write(1 + count*otstup, 2, 0);
-                    answer.write(1 + 1 + count*otstup, 2, Qd1->readValue().toInt()); //начальная точка графика спроса
-                    answer.write(1 + count*otstup, 3, 100);
-                    answer.write(1 + 1 + count*otstup, 3, Qd1->readValue().toInt() + Qd2->readValue().toInt() * 100); //конеч. точка графика спроса
-
-                    answer.write(1 + 2 + count*otstup, 2, 0);
-                    answer.write(1 + 3 + count*otstup, 2, Qs1->readValue().toInt());
-                    answer.write(1 + 2 + count*otstup, 3, 100);
-                    answer.write(1 + 3 + count*otstup, 3, Qs1->readValue().toInt() + Qs2->readValue().toInt() * 100);
                     if(temp2 > 0 && temp > 0 && ((Qs1->readValue().toInt() + Qs2->readValue().toInt() * 100) >= temp2) && 100 >= temp){
                         answer.write(1 + 20 + count*otstup, 4, "Равновесный объём");
                         answer.write(1 + 21 + count*otstup, 4, Qd1->readValue().toInt() + Qd2->readValue().toInt() * temp, format);
@@ -253,17 +260,13 @@ void MainWindow::on_pushButton_3_clicked()
                         answer.write(1 + 22 + count*otstup, 10, "Эластичность предложения по цене");
                         answer.write(1 + 23 + count*otstup, 10, abs((Qs2->readValue().toInt() * temp) / temp2), format);
                     }
-                    Chart *lineChart = answer.insertChart(1 - 1 + count*otstup, 3, QSize(600, 400));
-                    lineChart->setChartType(Chart::CT_LineChart);
-                    lineChart->setChartTitle("Результат");
-                    lineChart->setAxisTitle(Chart::ChartAxisPos::Bottom, "Цена");
-                    lineChart->setAxisTitle(Chart::ChartAxisPos::Left, "Объём товара");
-                    lineChart->addSeries(CellRange(1 + count * otstup,1,1 + 1 + count*otstup,3), NULL, true, true, false);
-                    lineChart->addSeries(CellRange(1 + 2 + count * otstup, 1, 1 + 3 + count * otstup, 3), NULL, true, true, false);
+                    else{
+                        answer.write(1 + 20 + count*otstup, 4, "Равновесная цена не достигнута или не имеет смысла.");
+                    }
                 }
-//                else{
-
-//                }
+                else{
+                    answer.write(1 + 20 + count*otstup, 4, "Равновесная цена не определена.");
+                }
                 row +=3;
                 count++;
             }
@@ -273,6 +276,5 @@ void MainWindow::on_pushButton_3_clicked()
             }
         }
     }
-    //answer.saveAs("multipleChart.xlsx");
 }
 
