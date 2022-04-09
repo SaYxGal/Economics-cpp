@@ -14,6 +14,7 @@ class helpWindow : public QDialog
 
 public:
     explicit helpWindow(QWidget *parent = nullptr);
+    void insertImage();
     ~helpWindow();
 
 private:

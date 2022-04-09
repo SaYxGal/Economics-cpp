@@ -195,7 +195,7 @@ void MainWindow::on_pushButton_2_clicked()
     lineChart->setAxisTitle(Chart::ChartAxisPos::Left, "Объём товара");
     lineChart->addSeries(CellRange(1,1,2,3), NULL, true, true, false);
     lineChart->addSeries(CellRange(3, 1, 4, 3), NULL, true, true, false);
-    xlsx.saveAs("chart1.xlsx");
+    xlsx.saveAs("chart.xlsx");
 }
 
 void MainWindow::on_horizontalSlider_valueChanged(int value)
@@ -207,7 +207,72 @@ void MainWindow::on_horizontalSlider_valueChanged(int value)
 void MainWindow::on_helpButton_clicked()
 {
     helpWindow *help = new helpWindow();
+    help->insertImage();
     help->setModal(true);
     help->show();
+}
+
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    QString path = QFileDialog::getOpenFileName(this, "Выберите файл с данными", "", "Excel file (*.xlsx)");
+    Document xlsxRead(path);
+    Document answer;
+    Format format;
+    format.setBorderStyle(Format::BorderMediumDashDot);
+    format.setFontColor(Qt::red);
+    int count = 0;
+    int otstup = 25;
+    if(xlsxRead.load()){
+        int row = 1;
+        while(true){
+            Cell* Qd1 = xlsxRead.cellAt(row, 1);
+            Cell* Qd2 = xlsxRead.cellAt(row, 2);
+            Cell* Qs1 = xlsxRead.cellAt(row+1, 1);
+            Cell* Qs2 = xlsxRead.cellAt(row+1, 2);
+            if(Qd1 != NULL && Qd2 != NULL && Qs1 != NULL && Qs2 != NULL){
+                if(Qd2->readValue().toInt() - Qs2->readValue().toInt() != 0){
+                    double temp = (double)(Qs1->readValue().toInt() - Qd1->readValue().toInt()) / (double)(Qd2->readValue().toInt() - Qs2->readValue().toInt());
+                    double temp2 = Qd1->readValue().toInt() + Qd2->readValue().toInt() * temp;
+                    answer.write(1 + count*otstup, 2, 0);
+                    answer.write(1 + 1 + count*otstup, 2, Qd1->readValue().toInt()); //начальная точка графика спроса
+                    answer.write(1 + count*otstup, 3, 100);
+                    answer.write(1 + 1 + count*otstup, 3, Qd1->readValue().toInt() + Qd2->readValue().toInt() * 100); //конеч. точка графика спроса
+
+                    answer.write(1 + 2 + count*otstup, 2, 0);
+                    answer.write(1 + 3 + count*otstup, 2, Qs1->readValue().toInt());
+                    answer.write(1 + 2 + count*otstup, 3, 100);
+                    answer.write(1 + 3 + count*otstup, 3, Qs1->readValue().toInt() + Qs2->readValue().toInt() * 100);
+                    if(temp2 > 0 && temp > 0 && ((Qs1->readValue().toInt() + Qs2->readValue().toInt() * 100) >= temp2) && 100 >= temp){
+                        answer.write(1 + 20 + count*otstup, 4, "Равновесный объём");
+                        answer.write(1 + 21 + count*otstup, 4, Qd1->readValue().toInt() + Qd2->readValue().toInt() * temp, format);
+                        answer.write(1 + 20 + count*otstup, 7, "Равновесная цена");
+                        answer.write(1 + 21 + count*otstup, 7, temp, format);
+                        answer.write(1 + 20 + count*otstup, 10, "Эластичность спроса по цене");
+                        answer.write(1 + 21 + count*otstup, 10, abs((Qd2->readValue().toInt() * temp) / temp2), format);
+                        answer.write(1 + 22 + count*otstup, 10, "Эластичность предложения по цене");
+                        answer.write(1 + 23 + count*otstup, 10, abs((Qs2->readValue().toInt() * temp) / temp2), format);
+                    }
+                    Chart *lineChart = answer.insertChart(1 - 1 + count*otstup, 3, QSize(600, 400));
+                    lineChart->setChartType(Chart::CT_LineChart);
+                    lineChart->setChartTitle("Результат");
+                    lineChart->setAxisTitle(Chart::ChartAxisPos::Bottom, "Цена");
+                    lineChart->setAxisTitle(Chart::ChartAxisPos::Left, "Объём товара");
+                    lineChart->addSeries(CellRange(1 + count * otstup,1,1 + 1 + count*otstup,3), NULL, true, true, false);
+                    lineChart->addSeries(CellRange(1 + 2 + count * otstup, 1, 1 + 3 + count * otstup, 3), NULL, true, true, false);
+                }
+//                else{
+
+//                }
+                row +=3;
+                count++;
+            }
+            else{
+                answer.saveAs("multipleChart.xlsx");
+                break;
+            }
+        }
+    }
+    //answer.saveAs("multipleChart.xlsx");
 }
 

@@ -12,3 +12,9 @@ helpWindow::~helpWindow()
 {
     delete ui;
 }
+void helpWindow::insertImage()
+{
+    QTextCursor c = ui->textBrowser->textCursor();
+    c.movePosition(QTextCursor::End);
+    c.insertImage("Example.png");
+}

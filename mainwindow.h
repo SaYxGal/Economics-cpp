@@ -8,6 +8,7 @@
 #include <QLineSeries>
 #include <QMouseEvent>
 #include <utility>
+#include <QFileDialog>
 #include <QGraphicsSimpleTextItem>
 #include "xlsxdocument.h"
 #include "xlsxchartsheet.h"
@@ -42,6 +43,8 @@ private slots:
     void on_horizontalSlider_valueChanged(int value);
 
     void on_helpButton_clicked();
+
+    void on_pushButton_3_clicked();
 
 private:
     Ui::MainWindow *ui;
