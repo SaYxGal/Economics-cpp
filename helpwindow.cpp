@@ -16,5 +16,5 @@ void helpWindow::insertImage()
 {
     QTextCursor c = ui->textBrowser->textCursor();
     c.movePosition(QTextCursor::End);
-    c.insertImage("Example.png");
+    c.insertImage(":resource/images/Example.jpg");
 }

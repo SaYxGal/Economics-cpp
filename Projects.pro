@@ -32,3 +32,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 SUBDIRS += \
     QXlsx.pro
+
+RESOURCES += \
+    resource.qrc
+
+DISTFILES +=
